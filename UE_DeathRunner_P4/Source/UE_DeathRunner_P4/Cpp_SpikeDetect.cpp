@@ -20,8 +20,6 @@ ACpp_SpikeDetect::ACpp_SpikeDetect()
 
 	// Set Spike Mesh
 	//static ConstructorHelpers::FObjectFinder<UStaticMesh> SpikeMeshAsset(TEXT("StaticMesh'/Engine/Plugins/ControlRigContent/Controls/ControlRig_Box_solid'"));
-	/*
-	 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SpikeMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cube'"));
 	if (SpikeMeshAsset.Succeeded())
 	{
@@ -31,7 +29,7 @@ ACpp_SpikeDetect::ACpp_SpikeDetect()
 	{
 		UE_LOG(LogTemp, Error, TEXT("Le mesh ControlRig_Box_solid n'a pas été trouvé."));
 	}
-	*/
+	
 #pragma  endregion
 
 #pragma region Box Collision
