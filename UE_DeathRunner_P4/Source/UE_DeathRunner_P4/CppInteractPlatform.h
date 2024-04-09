@@ -26,9 +26,6 @@ public:
 	FVector EndLocation;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CppInteractPlatform")
 	float Speed;
-
-
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

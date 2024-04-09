@@ -23,6 +23,7 @@ public:
 	UBoxComponent* CollisionBox;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<AActor*> SpikeTraps;
 	AActor* SpikeTrap;
 
 	UFUNCTION()
