@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "Cpp_SpikeTrap.h"
 
+#include "DeathFunction.h"
+
 ACpp_SpikeTrap::ACpp_SpikeTrap()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -107,11 +109,23 @@ void ACpp_SpikeTrap::ActivateSpike()
 	}, TimeBeforeAppeared, false);
 }
 
+void ACpp_SpikeTrap::Respawn()
+{
+	UDeathFunction::RespawnFunction(Player->FindComponentByClass<UCharacterMovementComponent>(), Player, FVector(0,0,150));
+}
+
 
 void ACpp_SpikeTrap::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Overlap"));
+	if (Player == OtherActor)
+	{
+		return;
+	}
+	Player = OtherActor;
+	UDeathFunction::DeathFunction(Player->FindComponentByClass<UCharacterMovementComponent>());
+	FTimerHandle UnusedHandle;
+	GetWorldTimerManager().SetTimer(UnusedHandle, this, &ACpp_SpikeTrap::Respawn, 5.0f, false);
 }
 
 // Called every frame

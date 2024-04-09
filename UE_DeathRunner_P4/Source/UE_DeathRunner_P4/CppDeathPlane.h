@@ -12,6 +12,7 @@ class UE_DEATHRUNNER_P4_API ACppDeathPlane : public AActor
 	GENERATED_BODY()
 	
 public:
+	void Respawn();
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	// Sets default values for this actor's properties
@@ -20,6 +21,7 @@ public:
 	class UBoxComponent* BoxComponent;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite , Category = "DeathPlane", meta = (MakeEditWidget = true))
 	FVector SpawnLocation;
+	AActor* Player;
 
 	
 	

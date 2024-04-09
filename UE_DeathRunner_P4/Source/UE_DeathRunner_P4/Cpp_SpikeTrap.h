@@ -22,6 +22,8 @@ protected:
 private:
 	FVector CurrentSpikeLocation;
 public:
+	AActor* Player;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* SpikeMesh;
 
@@ -45,7 +47,8 @@ public:
 	void DeactivateSpike();
 	UFUNCTION(BlueprintCallable)
 	void ActivateSpike();
-	
+
+	void Respawn();
 	UFUNCTION()
     void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	virtual void Tick(float DeltaTime) override;

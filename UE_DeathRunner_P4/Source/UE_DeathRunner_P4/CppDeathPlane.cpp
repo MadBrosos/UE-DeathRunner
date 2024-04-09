@@ -3,14 +3,21 @@
 
 #include "CppDeathPlane.h"
 
-#include "CppPlayerDeath.h"
+#include "DeathFunction.h"
 #include "Components/BoxComponent.h"
 
-void ACppDeathPlane::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void ACppDeathPlane::Respawn()
 {
-	OtherActor->SetActorLocation(SpawnLocation);
-	UCppPlayerDeath::PlayerDeath(OtherActor);
+	UDeathFunction::RespawnFunction(Player->FindComponentByClass<UCharacterMovementComponent>(), Player, FVector(0,0,150));
+}
+
+void ACppDeathPlane::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+                                    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	Player = OtherActor;
+	UDeathFunction::DeathFunction(Player->FindComponentByClass<UCharacterMovementComponent>());
+	FTimerHandle UnusedHandle;
+	GetWorldTimerManager().SetTimer(UnusedHandle, this, &ACppDeathPlane::Respawn, 5.0f, false);
 }
 
 // Sets default values
