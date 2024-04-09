@@ -17,7 +17,8 @@ ACpp_SpikeDetect::ACpp_SpikeDetect()
 	// SpikeMesh
 	SpikeMeshDetect = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SpikeMesh"));
 	SpikeMeshDetect->SetupAttachment(RootComponent);
-
+	SpikeMeshDetect->SetRelativeScale3D(FVector(1.0f, 1.0f, 0.1f));
+	
 	// Set Spike Mesh
 	//static ConstructorHelpers::FObjectFinder<UStaticMesh> SpikeMeshAsset(TEXT("StaticMesh'/Engine/Plugins/ControlRigContent/Controls/ControlRig_Box_solid'"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SpikeMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cube'"));
@@ -29,13 +30,14 @@ ACpp_SpikeDetect::ACpp_SpikeDetect()
 	{
 		UE_LOG(LogTemp, Error, TEXT("Le mesh ControlRig_Box_solid n'a pas été trouvé."));
 	}
+
 	
 #pragma  endregion
 
 #pragma region Box Collision
 	// Create Box Collision
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("SpikeCollision"));
-	CollisionBox->SetupAttachment(SpikeMeshDetect); 
+	CollisionBox->SetupAttachment(RootComponent); 
 	CollisionBox->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 
 	// Box Collision Settings
