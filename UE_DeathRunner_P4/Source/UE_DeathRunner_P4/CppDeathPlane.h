@@ -18,7 +18,7 @@ public:
 	ACppDeathPlane();
 	UPROPERTY(VisibleAnywhere)
 	class UBoxComponent* BoxComponent;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite , Category = "DeathPlane")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite , Category = "DeathPlane", meta = (MakeEditWidget = true))
 	FVector SpawnLocation;
 
 	
