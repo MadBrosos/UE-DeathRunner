@@ -3,12 +3,14 @@
 
 #include "CppDeathPlane.h"
 
+#include "CppPlayerDeath.h"
 #include "Components/BoxComponent.h"
 
 void ACppDeathPlane::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	OtherActor->SetActorLocation(SpawnLocation);
+	UCppPlayerDeath::PlayerDeath(OtherActor);
 }
 
 // Sets default values

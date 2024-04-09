@@ -12,7 +12,7 @@ ACpp_SpikeTrap::ACpp_SpikeTrap()
 	// SpikeMesh
 	SpikeMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SpikeMesh"));
 	SpikeMesh->SetupAttachment(RootComponent);
-	InitialSpikeLocation = SpikeMesh->GetComponentLocation();
+	InitialSpikeLocation = GetActorLocation();
 
 	// Set Spike Mesh
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SpikeMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Cube'"));
@@ -56,36 +56,42 @@ ACpp_SpikeTrap::ACpp_SpikeTrap()
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("SpikeCollision"));
 	CollisionBox->SetupAttachment(SpikeMesh); 
 	CollisionBox->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+	CollisionBox->SetCollisionProfileName(TEXT("Trigger"));
 
 	// Box Collision Settings
 	CollisionBox->InitBoxExtent(FVector(50.0f, 50.0f, 50.0f));
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ACpp_SpikeTrap::OnBeginOverlap);
+	
 }
 
 // Called when the game starts or when spawned
 void ACpp_SpikeTrap::BeginPlay()
 {
 	Super::BeginPlay();
-	SpikeMesh->SetVisibility(false);
+	CollisionBox->SetRelativeLocation(FVector(0.0f, 0.0f, -1000.0f));
+	SpikeMesh->SetRelativeLocation(FVector(0.0f, 0.0f, -1000.0f));
 }
 
 
 void ACpp_SpikeTrap::DeactivateSpike()
 {
 	UE_LOG(LogTemp, Warning, TEXT("DeactivateSpike called"));
-	SpikeMesh->SetRelativeLocation(InitialSpikeLocation);
+	SpikeMesh->SetRelativeLocation(FVector(0.0f, 0.0f, -1000.0f));
+	CollisionBox->SetRelativeLocation(FVector(0.0f, 0.0f, -1000.0f));
 	UE_LOG(LogTemp, Warning, TEXT("SpikeMesh Location: %s"), *SpikeMesh->GetComponentLocation().ToString());
-	SpikeMesh->SetVisibility(false);
+
+	FString SpikeMeshLocation = SpikeMesh->GetComponentLocation().ToString();
 }
 
 void ACpp_SpikeTrap::ActivateSpike()
 {
-	SpikeMesh->SetVisibility(true);
 
 	FVector TargetLocation = InitialSpikeLocation;
 	TargetLocation.Z += 200.0f;
 
 	CurrentSpikeLocation = SpikeMesh->GetRelativeLocation();
+	SpikeMesh->SetRelativeLocation(InitialSpikeLocation);
+	CollisionBox->SetRelativeLocation(InitialSpikeLocation);
 
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this, TargetLocation, &TimerHandle]()

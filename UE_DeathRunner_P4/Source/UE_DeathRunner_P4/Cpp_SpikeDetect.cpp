@@ -4,6 +4,20 @@
 #include "Cpp_SpikeDetect.h"
 
 
+void ACpp_SpikeDetect::OnBeginOverlap_Implementation(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	for (AActor* trap : SpikeTraps)
+	{
+		const auto CppSpikeTrap = Cast<ACpp_SpikeTrap>(trap);
+		if (CppSpikeTrap)
+		{
+			CppSpikeTrap->ActivateSpike();
+			UE_LOG(LogTemp, Warning, TEXT("SpikeTrap Activated"));
+		}
+	}
+}
+
 // Sets default values
 ACpp_SpikeDetect::ACpp_SpikeDetect()
 {
@@ -60,18 +74,19 @@ void ACpp_SpikeDetect::Tick(float DeltaTime)
 
 }
 
-void ACpp_SpikeDetect::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	for (AActor* trap : SpikeTraps)
-	{
-		const auto CppSpikeTrap = Cast<ACpp_SpikeTrap>(trap);
-		if (CppSpikeTrap)
-		{
-			CppSpikeTrap->ActivateSpike();
-			UE_LOG(LogTemp, Warning, TEXT("SpikeTrap Activated"));
-		}
-	}
-}
+// void ACpp_SpikeDetect::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+// 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+// {
+// 	for (AActor* trap : SpikeTraps)
+// 	{
+// 		const auto CppSpikeTrap = Cast<ACpp_SpikeTrap>(trap);
+// 		if (CppSpikeTrap)
+// 		{
+// 			CppSpikeTrap->ActivateSpike();
+// 			UE_LOG(LogTemp, Warning, TEXT("SpikeTrap Activated"));
+// 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("SpikeTrap Activated"));
+// 		}
+// 	}
+// }
 
 

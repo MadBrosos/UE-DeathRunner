@@ -41,9 +41,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float TimeBeforeReset = 2.0f;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void DeactivateSpike();
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void ActivateSpike();
 	
 	UFUNCTION()
