@@ -38,9 +38,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FVector InitialSpikeLocation = FVector(0.0f, 0.0f, -200.0f);
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float TimeBeforeAppeared = 0.2f;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float TimeBeforeReset = 2.0f;
 
 	UFUNCTION(BlueprintCallable)

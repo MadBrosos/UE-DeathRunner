@@ -96,17 +96,20 @@ void ACpp_SpikeTrap::ActivateSpike()
 	CollisionBox->SetRelativeLocation(InitialSpikeLocation);
 
 	FTimerHandle TimerHandle;
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this, TargetLocation, &TimerHandle]()
-	{
-		FVector NewLocation = FMath::VInterpTo(CurrentSpikeLocation, TargetLocation, GetWorld()->GetDeltaSeconds(), 0.2f);
-		SpikeMesh->SetRelativeLocation(NewLocation);
+	// GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this, TargetLocation, &TimerHandle]()
+	// {
+	// 	FVector NewLocation = FMath::VInterpTo(CurrentSpikeLocation, TargetLocation, GetWorld()->GetDeltaSeconds(), 0.2f);
+	// 	SpikeMesh->SetRelativeLocation(NewLocation);
+	//
+	// 	FTimerDelegate DeactivateDelegate = FTimerDelegate::CreateLambda([this]()
+	// 	{
+	// 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("DeactivateSpike"));
+	// 		DeactivateSpike();
+	// 	});
+	// 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, DeactivateDelegate, TimeBeforeReset, false);
+	// }, TimeBeforeAppeared, false);
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &ACpp_SpikeTrap::DeactivateSpike, TimeBeforeReset, false);
 
-		FTimerDelegate DeactivateDelegate = FTimerDelegate::CreateLambda([this]()
-		{
-			DeactivateSpike();
-		});
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, DeactivateDelegate, TimeBeforeReset, false);
-	}, TimeBeforeAppeared, false);
 }
 
 void ACpp_SpikeTrap::Respawn()
@@ -122,10 +125,14 @@ void ACpp_SpikeTrap::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AA
 	{
 		return;
 	}
-	Player = OtherActor;
-	UDeathFunction::DeathFunction(Player->FindComponentByClass<UCharacterMovementComponent>());
-	FTimerHandle UnusedHandle;
-	GetWorldTimerManager().SetTimer(UnusedHandle, this, &ACpp_SpikeTrap::Respawn, 5.0f, false);
+	//check if actor is a pawn
+	if (OtherActor->IsA(APawn::StaticClass()))
+	{
+		Player = OtherActor;
+		UDeathFunction::DeathFunction(Player->FindComponentByClass<UCharacterMovementComponent>());
+		FTimerHandle UnusedHandle;
+		GetWorldTimerManager().SetTimer(UnusedHandle, this, &ACpp_SpikeTrap::Respawn, 5.0f, false);
+	}
 }
 
 // Called every frame

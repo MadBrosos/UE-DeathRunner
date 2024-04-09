@@ -14,7 +14,17 @@ void UDeathFunction::DeathFunction(UCharacterMovementComponent* characterMovemen
 
 void UDeathFunction::RespawnFunction(UCharacterMovementComponent* characterMovementComponent, AActor* player, FVector respawnLocation)
 {
-	if (!characterMovementComponent || !player) return;
+	if (!characterMovementComponent)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("No charaMovementComponent found!"));		
+		return;
+	}
+	if(!player)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("No player found!"));		
+		return;
+	}
+	
 	characterMovementComponent->StopMovementImmediately();
 	characterMovementComponent->SetComponentTickEnabled(true);
 	characterMovementComponent->MovementMode = MOVE_Walking;

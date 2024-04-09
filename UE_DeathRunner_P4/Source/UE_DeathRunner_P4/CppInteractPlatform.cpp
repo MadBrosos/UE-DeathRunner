@@ -31,13 +31,13 @@ void ACppInteractPlatform::Interact()
 void ACppInteractPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (isInteracted && abs(sqrt(pow(GetActorLocation().X - (StartLocation.X + EndLocation.X), 2))) > 0.1f)
+	if (isInteracted && abs(sqrt(pow(GetActorLocation().X - (StartLocation.X + EndLocation.X), 2))) > 0.01f)
 	{
-		SetActorLocation(FMath::VInterpTo(GetActorLocation(), StartLocation + EndLocation, DeltaTime, Speed));
+		SetActorLocation(FMath::VInterpTo(GetActorLocation(), (StartLocation + EndLocation)*1.25f, DeltaTime, Speed));
 	}
-	else if (!isInteracted && abs(sqrt(pow(GetActorLocation().X - StartLocation.X, 2))) > 0.1f)
+	else if (!isInteracted && abs(sqrt(pow(GetActorLocation().X - StartLocation.X, 2))) > 0.01f)
 	{
-		SetActorLocation(FMath::VInterpTo(GetActorLocation(), StartLocation, DeltaTime, Speed));
+		SetActorLocation(FMath::VInterpTo(GetActorLocation(), StartLocation*1.25f, DeltaTime, Speed));
 	}
 }
 
