@@ -34,10 +34,12 @@ void ACppInteractPlatform::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (isInteracted && GetActorLocation() != EndLocation)
 	{
-		SetActorLocation(FMath::VInterpTo(GetActorLocation(), EndLocation*1.25, DeltaTime, Speed));
+		//go from current location to end location
+		SetActorLocation(FMath::VInterpTo(GetActorLocation(), EndLocation, DeltaTime, Speed));
 	}
 	else if (!isInteracted && GetActorLocation() != StartLocation)
 	{
+		//go from current location to start location
 		SetActorLocation(FMath::VInterpTo(GetActorLocation(), StartLocation, DeltaTime, Speed));
 	}
 }
