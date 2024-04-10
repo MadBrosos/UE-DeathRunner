@@ -18,6 +18,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CppInteractiblesTrigger")
 	AActor* LinkedActor;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CppInteractiblesTrigger")
+	TArray<AActor*> LinkedActors;
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "CppInteractiblesTrigger")
 	void CppTriggerInteract();
 

@@ -4,6 +4,7 @@
 #include "CppInteractiblesTrigger.h"
 
 #include "CppInteractiblesInterface.h"
+#include "Cpp_SpikeTrap.h"
 
 // Sets default values
 ACppInteractiblesTrigger::ACppInteractiblesTrigger()
@@ -19,6 +20,26 @@ void ACppInteractiblesTrigger::CppTriggerInteract_Implementation()
 		if (InteractibleActor)
 		{
 			InteractibleActor->Interact();
+		}
+	}
+
+	if (LinkedActors.Num() > 0)
+	{
+		for (AActor* Actor : LinkedActors)
+		{
+
+			const auto CppSpikeTrap = Cast<ACpp_SpikeTrap>(Actor);
+			if (CppSpikeTrap)
+			{
+				CppSpikeTrap->ActivateSpike();
+				continue;
+			}
+			
+			ICppInteractiblesInterface* InteractibleActor = Cast<ICppInteractiblesInterface>(Actor);
+			if (InteractibleActor)
+			{
+				InteractibleActor->Interact();
+			}
 		}
 	}
 }
