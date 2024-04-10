@@ -17,7 +17,8 @@ ACppInteractPlatform::ACppInteractPlatform()
 void ACppInteractPlatform::BeginPlay()
 {
 	Super::BeginPlay();
-	StartLocation = GetActorLocation();
+	StartLocation += GetActorLocation();
+	EndLocation += GetActorLocation();
 }
 
 void ACppInteractPlatform::Interact()
@@ -31,13 +32,13 @@ void ACppInteractPlatform::Interact()
 void ACppInteractPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (isInteracted && abs(sqrt(pow(GetActorLocation().X - (StartLocation.X + EndLocation.X), 2))) > 0.01f)
+	if (isInteracted && GetActorLocation() != EndLocation)
 	{
-		SetActorLocation(FMath::VInterpTo(GetActorLocation(), (StartLocation + EndLocation)*1.25f, DeltaTime, Speed));
+		SetActorLocation(FMath::VInterpTo(GetActorLocation(), EndLocation*1.25, DeltaTime, Speed));
 	}
-	else if (!isInteracted && abs(sqrt(pow(GetActorLocation().X - StartLocation.X, 2))) > 0.01f)
+	else if (!isInteracted && GetActorLocation() != StartLocation)
 	{
-		SetActorLocation(FMath::VInterpTo(GetActorLocation(), StartLocation*1.25f, DeltaTime, Speed));
+		SetActorLocation(FMath::VInterpTo(GetActorLocation(), StartLocation, DeltaTime, Speed));
 	}
 }
 

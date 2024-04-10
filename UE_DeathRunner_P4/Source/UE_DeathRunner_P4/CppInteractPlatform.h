@@ -21,6 +21,7 @@ public:
 
 	virtual void Interact() override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CppInteractPlatform", meta = (MakeEditWidget = true))
 	FVector StartLocation;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CppInteractPlatform", meta = (MakeEditWidget = true))
 	FVector EndLocation;
