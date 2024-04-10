@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/PostProcessVolume.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "DeathFunction.generated.h"
@@ -14,7 +15,11 @@ UCLASS()
 class UE_DEATHRUNNER_P4_API UDeathFunction : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
-public:
+public:	
+	UFUNCTION(BlueprintCallable, Category = "DeathFunction")
+	static void SetDeathScreen(UUserWidget* arg, APostProcessVolume* postProcessVolume);
+	inline static UUserWidget* deathScreen = nullptr;
+	inline static APostProcessVolume* postProcessVolume = nullptr;
 	UFUNCTION(BlueprintCallable, Category = "DeathFunction")
 	static void DeathFunction(UCharacterMovementComponent* characterMovementComponent);
 	UFUNCTION(BlueprintCallable, Category = "DeathFunction")
