@@ -17,14 +17,6 @@ void UDeathFunction::DeathFunction(UCharacterMovementComponent* characterMovemen
 	characterMovementComponent->StopMovementImmediately();
 	characterMovementComponent->DisableMovement();
 	characterMovementComponent->SetComponentTickEnabled(false);
-	if (deathScreen)
-	{
-		deathScreen->AddToViewport(2);
-	}
-	if (postProcessVolume)
-	{
-		postProcessVolume->Settings.ColorSaturation.Set(1, 1, 1,0);
-	}
 }
 
 void UDeathFunction::RespawnFunction(UCharacterMovementComponent* characterMovementComponent, AActor* player, FVector respawnLocation)
@@ -39,12 +31,4 @@ void UDeathFunction::RespawnFunction(UCharacterMovementComponent* characterMovem
 	characterMovementComponent->MovementMode = MOVE_Walking;
 	characterMovementComponent->Velocity = FVector(0, 0, 0);
 	player->SetActorLocation(respawnLocation);
-	if (deathScreen)
-	{
-		deathScreen->RemoveFromParent();
-	}
-	if (postProcessVolume)
-	{
-		postProcessVolume->Settings.ColorSaturation.Set(1, 1, 1,1);
-	}
 }

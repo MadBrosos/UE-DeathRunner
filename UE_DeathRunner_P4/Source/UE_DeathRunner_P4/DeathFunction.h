@@ -24,5 +24,7 @@ public:
 	static void DeathFunction(UCharacterMovementComponent* characterMovementComponent);
 	UFUNCTION(BlueprintCallable, Category = "DeathFunction")
 	static void RespawnFunction(UCharacterMovementComponent* characterMovementComponent, AActor* player, FVector respawnLocation);
+
+	TSubclassOf<UUserWidget> deathScreenClass;
 	
 };
